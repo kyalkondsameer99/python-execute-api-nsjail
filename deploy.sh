@@ -41,20 +41,20 @@ echo "🔧 Service name: $SERVICE_NAME"
 
 # Build and tag the image
 echo "🏗️  Building Docker image..."
-docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME:latest .
+docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/api:latest .
 
 # Configure Docker to use gcloud as a credential helper
 echo "🔐 Configuring Docker authentication..."
-gcloud auth configure-docker
+gcloud auth configure-docker $REGION-docker.pkg.dev
 
-# Push the image to Container Registry
-echo "📤 Pushing image to Container Registry..."
-docker push gcr.io/$PROJECT_ID/$SERVICE_NAME:latest
+# Push the image to Artifact Registry
+echo "📤 Pushing image to Artifact Registry..."
+docker push $REGION-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/api:latest
 
 # Deploy to Cloud Run
 echo "🚀 Deploying to Cloud Run..."
 gcloud run deploy $SERVICE_NAME \
-    --image gcr.io/$PROJECT_ID/$SERVICE_NAME:latest \
+    --image $REGION-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME/api:latest \
     --platform managed \
     --region $REGION \
     --allow-unauthenticated \
