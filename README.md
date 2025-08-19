@@ -2,6 +2,8 @@
 
 A secure Python code execution service built with Flask and nsjail for safe execution of user-provided Python scripts in an isolated environment.
 
+**GitHub Repository**: [https://github.com/kyalkondsameer99/python-execute-api-nsjail](https://github.com/kyalkondsameer99/python-execute-api-nsjail)
+
 ## Features
 
 - **Secure Execution**: Uses nsjail for process isolation and sandboxing
@@ -97,11 +99,11 @@ curl -X POST https://pyexec-api-xxxxx-uc.a.run.app/execute \
 ## Security Features
 
 - **Process Isolation**: Linux namespaces (PID, NET, UTS, IPC, USER, MOUNT)
-- **Resource Limits**: CPU, memory, file size, and process count restrictions
+- **Resource Limits**: CPU (1 core), Memory (256MB), File size (10MB), Process count (128)
 - **Network Isolation**: No network access from sandbox
-- **Read-only Mounts**: System libraries mounted as read-only
-- **User Namespace**: Runs as unprivileged user inside sandbox
-- **Timeout Protection**: Configurable execution time limits
+- **File System**: Read-only system mounts, isolated `/sandbox` workspace
+- **User Isolation**: Runs as unprivileged user (UID 1000) inside sandbox
+- **Timeout Protection**: Configurable execution time limits (default: 10s)
 
 ## Architecture
 
